@@ -8,4 +8,5 @@ locals {
 
 variable "cluster_files_path" {
   type = string
+  default = "../cluster_yaml"
 }

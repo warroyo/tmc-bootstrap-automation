@@ -88,7 +88,7 @@ az keyvault secret set --vault-name "terraform-secrets01" --name "tmc-api-key" -
 
 ## Create a base pipeline for the git repo
 
-
+In the ADO project create a new pipeline and select your repo and the azure-pipelines.yaml, it should automatically pick this up.
 
 ## Working locally
 
