@@ -1,0 +1,104 @@
+variables: 
+- name: resource_group
+  value: tmc-bootstrap-automation
+- name: storage_account
+  value: tfstate01tmc
+- name: service_connection
+  value: warroyo-se-azure
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - "cluster_yaml/*"
+      - "terraform/*"
+stages:
+  - stage: validate
+    jobs:
+    - job: validate
+      continueOnError: false
+      steps:
+      - task: TerraformInstaller@0
+        displayName: "Install Terraform"
+        inputs:
+          terraformVersion: '1.5.4'
+      - task: TerraformTaskV2@3
+        displayName: 'init'
+        inputs:
+          provider: 'azurerm'
+          command: 'init'
+          backendServiceArm: $(service_connection) # service connection created during setup
+          backendAzureRmResourceGroupName: $(resource_group)
+          backendAzureRmStorageAccountName: $(storage_account)
+          backendAzureRmContainerName: 'tfstate'
+          backendAzureRmKey: 'terraform.tfstate'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+      - task: TerraformTaskV2@3
+        displayName: 'validate'
+        inputs:
+          provider: 'azurerm'
+          command: 'validate'
+          
+  - stage: plan
+    dependsOn: [validate]
+    condition: succeeded('validate')
+    jobs:
+      - job: terraform_plan
+        steps:
+              - checkout: self
+              - task: TerraformInstaller@0
+                displayName: 'install'
+                inputs:
+                  terraformVersion: '1.5.4'
+              - task: TerraformTaskV2@3
+                displayName: 'init'
+                inputs:
+                  inputs:
+                  provider: 'azurerm'
+                  command: 'init'
+                  backendServiceArm: $(service_connection)
+                  backendAzureRmResourceGroupName: $(resource_group)
+                  backendAzureRmStorageAccountName: $(storage_account)
+                  backendAzureRmContainerName: 'tfstate'
+                  backendAzureRmKey: 'terraform.tfstate'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+              - task: TerraformTaskV2@3
+                displayName: 'plan'
+                inputs:
+                  provider: 'azurerm'
+                  command: 'plan'
+                  environmentServiceNameAzureRM: $(service_connection)
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+
+  - stage: apply
+    dependsOn: [plan]
+    condition: succeeded('plan')
+    jobs:
+      - job: terraform_apply
+        steps:
+              - checkout: self
+              - task: TerraformInstaller@0
+                displayName: 'install'
+                inputs:
+                  terraformVersion: '1.5.4'
+              - task: TerraformTaskV2@3
+                displayName: 'init'
+                inputs:
+                  inputs:
+                  provider: 'azurerm'
+                  command: 'init'
+                  backendServiceArm: $(service_connection)
+                  backendAzureRmResourceGroupName: $(resource_group)
+                  backendAzureRmStorageAccountName: $(storage_account)
+                  backendAzureRmContainerName: 'tfstate'
+                  backendAzureRmKey: 'terraform.tfstate'
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+              - task: TerraformTaskV2@3
+
+                displayName: 'apply'
+                inputs:
+                  provider: 'azurerm'
+                  command: 'apply'
+                  environmentServiceNameAzureRM: $(service_connection)
+                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
