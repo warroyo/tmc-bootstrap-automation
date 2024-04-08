@@ -2,16 +2,16 @@
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
-  name: fluxenforcesa
+  name: fluxenforcesa2
 spec:
   crd:
     spec:
       names:
-        kind: fluxenforcesa
+        kind: fluxenforcesa2
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
-        package fluxenforcesa
+        package fluxenforcesa2
 
         violation[{"msg": msg, "details": {}}] {
             any([input.review.object.kind == "Kustomization", input.review.object.kind == "HelmRelease"])
