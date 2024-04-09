@@ -133,8 +133,6 @@ stages:
               inputs:
                 provider: 'azurerm'
                 command: 'output'
-                outputTo: file
-                outputFormat: json
                 environmentServiceNameAzureRM: $(service_connection)
                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
             - script: |
