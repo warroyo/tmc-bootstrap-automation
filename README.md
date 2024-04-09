@@ -9,6 +9,8 @@ This repo provides an example of provisioning TKGs clusters using TMC Terraform 
 * TMC organization
 
 
+##
+
 ## Setup an ADO project
 
 Create a new ADO project or use an existing one. 
@@ -92,7 +94,7 @@ In the ADO project create a new pipeline and select your repo and the azure-pipe
 
 ## Templating new clusters and cluster groups
 
-when creating clusters and cluster groups we also need to generate some flux directroy structure and files 
+When creating clusters and cluster groups we also need to generate some flux directroy structure and files. For this we are using a tool call [copier](https://copier.readthedocs.io/en/stable/). the directory `flux-templating` is where all of the templates exist. In the pipeline run there is a templating step that will execute copier via python script and generate the needed files/directories based on the terraform output. The script that runs this can be found in the `pipeline-scripts` folder. 
 
 ## Working locally
 
