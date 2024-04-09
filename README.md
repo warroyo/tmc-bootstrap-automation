@@ -90,6 +90,8 @@ az keyvault secret set --vault-name "terraform-secrets01" --name "tmc-api-key" -
 
 In the ADO project create a new pipeline and select your repo and the azure-pipelines.yaml, it should automatically pick this up.
 
+## Templating new clusters and cluster groups
+
 ## Working locally
 
 1. `cd terraform`

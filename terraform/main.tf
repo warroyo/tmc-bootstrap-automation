@@ -39,3 +39,7 @@ module "clusters" {
 output "cluster_names" {
   value = module.clusters.cluster_names
 }
+
+output "cluster_groups" {
+  value = module.cluster_groups.cluster_groups
+}

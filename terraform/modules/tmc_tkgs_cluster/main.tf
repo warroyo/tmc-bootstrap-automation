@@ -28,7 +28,7 @@ locals {
         "storageClass" : var.storage_class
       }
     ],
-    "ntp" : "172.16.20.10",
+    "ntp" : var.ntp,
     "storageClass" : var.storage_class,
     "storageClasses" : [
      var.storage_class

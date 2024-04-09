@@ -33,3 +33,7 @@ module "cg_bootstrap" {
   cluster_group = tanzu-mission-control_cluster_group.create_cluster_group[each.key].name
   infra_gitops_repo = "https://github.com/warroyo/tmc-bootstrap-automation"
 }
+
+output "cluster_groups" {
+  value = [ for group in tanzu-mission-control_cluster_group.create_cluster_group : group.name ]
+}

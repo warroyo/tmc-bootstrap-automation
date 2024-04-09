@@ -1,0 +1,21 @@
+new_cluster:
+  type: bool
+  default: false
+  help: Are you creating a new cluster?
+cluster_name:
+  type: str
+  default: ""
+  when: "{{ new_cluster }}"
+new_group:
+  type: bool
+  default: false
+  help: Are you creating a new cluster group?
+cluster_group:
+  type: str
+  default: ""
+  when: "{{ new_group }}"
+
+_exclude:
+  - .vscode
+  - .gitignore
+  - copier.yml

@@ -47,3 +47,7 @@ variable "management_cluster_name" {
 variable "provisioner_name" {
   type = string
 }
+
+variable "ntp" {
+  type = string
+}

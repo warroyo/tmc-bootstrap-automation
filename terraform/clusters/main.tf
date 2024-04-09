@@ -16,6 +16,7 @@ module "clusters" {
   cp_replicas = 3
   cp_vm_class = "best-effort-medium"
   np_replicas = 3
+  ntp = "time2.oc.vmware.com"
   np_vm_class = "best-effort-xlarge"
   cluster_group = each.value.product_team
   k8s_version = each.value.k8s_version
