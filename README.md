@@ -13,7 +13,8 @@ This repo provides an example of provisioning TKGs clusters using TMC Terraform 
 
 This repo sets up the following:
 
-1. Terraform for automating the following in TMC for new onbaording teams
+1. Simple yaml file input to drive onboarding of new teams
+2. Terraform for automating the following in TMC for new onbaording teams
    1. cluster groups
    2. clusters
    3. CD & Helm config 
@@ -23,11 +24,11 @@ This repo sets up the following:
    7. Iam permissions
    8. workspaces
    9. default namespace for the team in each cluster
-2. Minimal Flux diretcory structure for installing the following
+3. Minimal Flux diretcory structure for installing the following
    1. contour
    2. cert manager
-3. Flux templating for generating cluster and cluster group specific files/directories based on terraform output
-4. azure pipeline to automate everything using ADO. 
+4. Flux templating for generating cluster and cluster group specific files/directories based on terraform output
+5. azure pipeline to automate everything using ADO. 
 
 
 ## Setup an ADO project
