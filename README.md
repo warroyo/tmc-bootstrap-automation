@@ -23,6 +23,11 @@ This repo sets up the following:
    7. Iam permissions
    8. workspaces
    9. default namespace for the team in each cluster
+2. Minimal Flux diretcory structure for installing the following
+   1. contour
+   2. cert manager
+3. Flux templating for generating cluster and cluster group specific files/directories based on terraform output
+4. azure pipeline to automate everything using ADO. 
 
 
 ## Setup an ADO project
