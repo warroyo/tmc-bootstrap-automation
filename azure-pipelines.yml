@@ -23,7 +23,7 @@ stages:
         displayName: "Install Terraform"
         inputs:
           terraformVersion: '1.5.4'
-      - task: TerraformTaskV2@3
+      - task: TerraformTaskv4@4
         displayName: 'init'
         inputs:
           provider: 'azurerm'
@@ -34,7 +34,7 @@ stages:
           backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: 'terraform.tfstate'
           workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-      - task: TerraformTaskV2@3
+      - task: TerraformTaskv4@4
         displayName: 'validate'
         inputs:
           provider: 'azurerm'
@@ -51,7 +51,7 @@ stages:
                 displayName: 'install'
                 inputs:
                   terraformVersion: '1.5.4'
-              - task: TerraformTaskV2@3
+              - task: TerraformTaskv4@4
                 displayName: 'init'
                 inputs:
                   inputs:
@@ -63,7 +63,7 @@ stages:
                   backendAzureRmContainerName: 'tfstate'
                   backendAzureRmKey: 'terraform.tfstate'
                   workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-              - task: TerraformTaskV2@3
+              - task: TerraformTaskv4@4
                 displayName: 'plan'
                 inputs:
                   provider: 'azurerm'
@@ -82,7 +82,7 @@ stages:
                 displayName: 'install'
                 inputs:
                   terraformVersion: '1.5.4'
-              - task: TerraformTaskV2@3
+              - task: TerraformTaskv4@4
                 displayName: 'init'
                 inputs:
                   inputs:
@@ -94,11 +94,52 @@ stages:
                   backendAzureRmContainerName: 'tfstate'
                   backendAzureRmKey: 'terraform.tfstate'
                   workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-              - task: TerraformTaskV2@3
-
+              - task: TerraformTaskv4@4
                 displayName: 'apply'
                 inputs:
                   provider: 'azurerm'
                   command: 'apply'
                   environmentServiceNameAzureRM: $(service_connection)
                   workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  - stage: template
+    dependsOn: [apply]
+    condition: succeeded('apply')
+    jobs:
+      - job: template_files
+        steps:
+            - checkout: self
+            - task: UsePythonVersion@0
+              inputs:
+                versionSpec: '3.x' 
+            - task: TerraformInstaller@0
+              displayName: 'install'
+              inputs:
+                terraformVersion: '1.5.4'
+            - task: TerraformTaskv4@4
+              displayName: 'init'
+              inputs:
+                inputs:
+                provider: 'azurerm'
+                command: 'init'
+                backendServiceArm: $(service_connection)
+                backendAzureRmResourceGroupName: $(resource_group)
+                backendAzureRmStorageAccountName: $(storage_account)
+                backendAzureRmContainerName: 'tfstate'
+                backendAzureRmKey: 'terraform.tfstate'
+                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            - task: TerraformTaskv4@4
+              displayName: 'output'
+              inputs:
+                provider: 'azurerm'
+                command: 'output'
+                outputTo: file
+                outputFormat: json
+                environmentServiceNameAzureRM: $(service_connection)
+                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            - task: PythonScript@0
+              inputs:
+                scriptSource: 'filePath'
+                scriptPath: '$(System.DefaultWorkingDirectory)/pipeline-scripts/generate-flux.yml'
+                arguments:  $(output.jsonOutputVariablesPath)
+                workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
+                failOnStderr: true # boolean. Fail on standard error. Default: false.
