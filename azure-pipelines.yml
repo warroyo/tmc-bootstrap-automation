@@ -157,12 +157,11 @@ stages:
                 git push --set-upstream origin $(Build.BuildNumber) 
               displayName: push flux repo structure
               workingDirectory: $(System.DefaultWorkingDirectory)
-
-            # - task: CreatePullRequest@1
-            #   inputs:
-            #     repoType: 'GitHub'
-            #     githubEndpoint: 'warroyo'
-            #     githubRepository: '$(Build.Repository.Name)'
-            #     sourceBranch: '$(Build.SourceBranch)'
-            #     targetBranch: 'main'
-            #     title: 'generate flux structure'
+            - task: CreatePullRequest@1
+              inputs:
+                repoType: 'GitHub'
+                githubEndpoint: 'warroyo'
+                githubRepository: '$(Build.Repository.Name)'
+                sourceBranch: '$(Build.BuildNumber)'
+                targetBranch: 'main'
+                title: 'generate flux structure'

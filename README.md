@@ -9,7 +9,20 @@ This repo provides an example of provisioning TKGs clusters using TMC Terraform 
 * TMC organization
 
 
-## How it works
+## What does this repo do?
+
+This repo sets up the following:
+
+1. Terraform for automating the following in TMC for new onbaording teams
+   1. cluster groups
+   2. clusters
+   3. CD & Helm config 
+   4. IAM roles
+   5. Policy templates
+   6. Policies
+   7. Iam permissions
+   8. workspaces
+   9. default namespace for the team in each cluster
 
 
 ## Setup an ADO project
