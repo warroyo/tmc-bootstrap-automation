@@ -136,6 +136,10 @@ stages:
                 outputFormat: json
                 environmentServiceNameAzureRM: $(service_connection)
                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            - script: |
+                python -m pip install --upgrade pip
+                pip install copier
+              displayName: 'Install Python dependencies'
             - task: PythonScript@0
               inputs:
                 scriptSource: 'filePath'
