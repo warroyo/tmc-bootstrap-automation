@@ -19,3 +19,5 @@ _exclude:
   - .vscode
   - .gitignore
   - copier.yml
+  - cluster-name-slug
+  - cluster-group-slug
