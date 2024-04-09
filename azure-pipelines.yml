@@ -146,3 +146,22 @@ stages:
                 arguments:  '$(tfoutput.jsonOutputVariablesPath)'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
                 failOnStderr: true # boolean. Fail on standard error. Default: false.
+            - script: |
+                git config --global user.email tmc-ado-automation@vmware.com & git config --global user.name "ado"
+              workingDirectory: $(System.DefaultWorkingDirectory)
+            - script: |
+                git checkout -b $(Build.BuildNumber)
+                git add -A
+                git commit -m "generating flux repo structure $(Build.BuildNumber)"
+                git push --set-upstream origin $(Build.BuildNumber) 
+              displayName: push flux repo structure
+              workingDirectory: $(System.DefaultWorkingDirectory)
+
+            # - task: CreatePullRequest@1
+            #   inputs:
+            #     repoType: 'GitHub'
+            #     githubEndpoint: 'warroyo'
+            #     githubRepository: '$(Build.Repository.Name)'
+            #     sourceBranch: '$(Build.SourceBranch)'
+            #     targetBranch: 'main'
+            #     title: 'generate flux structure'

@@ -9,7 +9,8 @@ This repo provides an example of provisioning TKGs clusters using TMC Terraform 
 * TMC organization
 
 
-##
+## How it works
+
 
 ## Setup an ADO project
 
