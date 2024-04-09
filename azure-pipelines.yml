@@ -108,6 +108,8 @@ stages:
       - job: template_files
         steps:
             - checkout: self
+              persistCredentials: true
+              
             - task: UsePythonVersion@0
               inputs:
                 versionSpec: '3.x' 
