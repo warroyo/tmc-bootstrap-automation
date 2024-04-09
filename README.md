@@ -92,6 +92,8 @@ In the ADO project create a new pipeline and select your repo and the azure-pipe
 
 ## Templating new clusters and cluster groups
 
+when creating clusters and cluster groups we also need to generate some flux directroy structure and files 
+
 ## Working locally
 
 1. `cd terraform`

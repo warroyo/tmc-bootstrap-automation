@@ -144,6 +144,6 @@ stages:
               inputs:
                 scriptSource: 'filePath'
                 scriptPath: '$(System.DefaultWorkingDirectory)/pipeline-scripts/generate-flux.py'
-                arguments:  $(output.jsonOutputVariablesPath)
+                arguments:  '$(output.jsonOutputVariablesPath)'
                 workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
                 failOnStderr: true # boolean. Fail on standard error. Default: false.
