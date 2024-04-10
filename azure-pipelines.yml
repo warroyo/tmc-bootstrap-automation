@@ -14,93 +14,93 @@ trigger:
       - "cluster_yaml/*"
       - "terraform/*"
 stages:
-  - stage: validate
-    jobs:
-    - job: validate
-      continueOnError: false
-      steps:
-      - task: TerraformInstaller@0
-        displayName: "Install Terraform"
-        inputs:
-          terraformVersion: '1.5.4'
-      - task: TerraformTaskV4@4
-        displayName: 'init'
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          backendServiceArm: $(service_connection) # service connection created during setup
-          backendAzureRmResourceGroupName: $(resource_group)
-          backendAzureRmStorageAccountName: $(storage_account)
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform.tfstate'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-      - task: TerraformTaskV4@4
-        displayName: 'validate'
-        inputs:
-          provider: 'azurerm'
-          command: 'validate'
+  # - stage: validate
+  #   jobs:
+  #   - job: validate
+  #     continueOnError: false
+  #     steps:
+  #     - task: TerraformInstaller@0
+  #       displayName: "Install Terraform"
+  #       inputs:
+  #         terraformVersion: '1.5.4'
+  #     - task: TerraformTaskV4@4
+  #       displayName: 'init'
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'init'
+  #         backendServiceArm: $(service_connection) # service connection created during setup
+  #         backendAzureRmResourceGroupName: $(resource_group)
+  #         backendAzureRmStorageAccountName: $(storage_account)
+  #         backendAzureRmContainerName: 'tfstate'
+  #         backendAzureRmKey: 'terraform.tfstate'
+  #         workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  #     - task: TerraformTaskV4@4
+  #       displayName: 'validate'
+  #       inputs:
+  #         provider: 'azurerm'
+  #         command: 'validate'
           
-  - stage: plan
-    dependsOn: [validate]
-    condition: succeeded('validate')
-    jobs:
-      - job: terraform_plan
-        steps:
-              - checkout: self
-              - task: TerraformInstaller@0
-                displayName: 'install'
-                inputs:
-                  terraformVersion: '1.5.4'
-              - task: TerraformTaskV4@4
-                displayName: 'init'
-                inputs:
-                  inputs:
-                  provider: 'azurerm'
-                  command: 'init'
-                  backendServiceArm: $(service_connection)
-                  backendAzureRmResourceGroupName: $(resource_group)
-                  backendAzureRmStorageAccountName: $(storage_account)
-                  backendAzureRmContainerName: 'tfstate'
-                  backendAzureRmKey: 'terraform.tfstate'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-              - task: TerraformTaskV4@4
-                displayName: 'plan'
-                inputs:
-                  provider: 'azurerm'
-                  command: 'plan'
-                  environmentServiceNameAzureRM: $(service_connection)
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  # - stage: plan
+  #   dependsOn: [validate]
+  #   condition: succeeded('validate')
+  #   jobs:
+  #     - job: terraform_plan
+  #       steps:
+  #             - checkout: self
+  #             - task: TerraformInstaller@0
+  #               displayName: 'install'
+  #               inputs:
+  #                 terraformVersion: '1.5.4'
+  #             - task: TerraformTaskV4@4
+  #               displayName: 'init'
+  #               inputs:
+  #                 inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'init'
+  #                 backendServiceArm: $(service_connection)
+  #                 backendAzureRmResourceGroupName: $(resource_group)
+  #                 backendAzureRmStorageAccountName: $(storage_account)
+  #                 backendAzureRmContainerName: 'tfstate'
+  #                 backendAzureRmKey: 'terraform.tfstate'
+  #                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  #             - task: TerraformTaskV4@4
+  #               displayName: 'plan'
+  #               inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'plan'
+  #                 environmentServiceNameAzureRM: $(service_connection)
+  #                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
 
-  - stage: apply
-    dependsOn: [plan]
-    condition: succeeded('plan')
-    jobs:
-      - job: terraform_apply
-        steps:
-              - checkout: self
-              - task: TerraformInstaller@0
-                displayName: 'install'
-                inputs:
-                  terraformVersion: '1.5.4'
-              - task: TerraformTaskV4@4
-                displayName: 'init'
-                inputs:
-                  inputs:
-                  provider: 'azurerm'
-                  command: 'init'
-                  backendServiceArm: $(service_connection)
-                  backendAzureRmResourceGroupName: $(resource_group)
-                  backendAzureRmStorageAccountName: $(storage_account)
-                  backendAzureRmContainerName: 'tfstate'
-                  backendAzureRmKey: 'terraform.tfstate'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-              - task: TerraformTaskV4@4
-                displayName: 'apply'
-                inputs:
-                  provider: 'azurerm'
-                  command: 'apply'
-                  environmentServiceNameAzureRM: $(service_connection)
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  # - stage: apply
+  #   dependsOn: [plan]
+  #   condition: succeeded('plan')
+  #   jobs:
+  #     - job: terraform_apply
+  #       steps:
+  #             - checkout: self
+  #             - task: TerraformInstaller@0
+  #               displayName: 'install'
+  #               inputs:
+  #                 terraformVersion: '1.5.4'
+  #             - task: TerraformTaskV4@4
+  #               displayName: 'init'
+  #               inputs:
+  #                 inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'init'
+  #                 backendServiceArm: $(service_connection)
+  #                 backendAzureRmResourceGroupName: $(resource_group)
+  #                 backendAzureRmStorageAccountName: $(storage_account)
+  #                 backendAzureRmContainerName: 'tfstate'
+  #                 backendAzureRmKey: 'terraform.tfstate'
+  #                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+  #             - task: TerraformTaskV4@4
+  #               displayName: 'apply'
+  #               inputs:
+  #                 provider: 'azurerm'
+  #                 command: 'apply'
+  #                 environmentServiceNameAzureRM: $(service_connection)
+  #                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
   - stage: template
     dependsOn: [apply]
     condition: succeeded('apply')
@@ -110,58 +110,68 @@ stages:
             - checkout: self
               persistCredentials: true
 
-            - task: UsePythonVersion@0
-              inputs:
-                versionSpec: '3.x' 
-            - task: TerraformInstaller@0
-              displayName: 'install'
-              inputs:
-                terraformVersion: '1.5.4'
-            - task: TerraformTaskV4@4
-              displayName: 'init'
-              inputs:
-                inputs:
-                provider: 'azurerm'
-                command: 'init'
-                backendServiceArm: $(service_connection)
-                backendAzureRmResourceGroupName: $(resource_group)
-                backendAzureRmStorageAccountName: $(storage_account)
-                backendAzureRmContainerName: 'tfstate'
-                backendAzureRmKey: 'terraform.tfstate'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-            - task: TerraformTaskV4@4
-              displayName: 'output'
-              name: tfoutput
-              inputs:
-                provider: 'azurerm'
-                command: 'output'
-                environmentServiceNameAzureRM: $(service_connection)
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
-            - script: |
-                python -m pip install --upgrade pip
-                pip install copier
-              displayName: 'Install Python dependencies'
-            - task: PythonScript@0
-              inputs:
-                scriptSource: 'filePath'
-                scriptPath: '$(System.DefaultWorkingDirectory)/pipeline-scripts/generate-flux.py'
-                arguments:  '$(tfoutput.jsonOutputVariablesPath)'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
+            # - task: UsePythonVersion@0
+            #   inputs:
+            #     versionSpec: '3.x' 
+            # - task: TerraformInstaller@0
+            #   displayName: 'install'
+            #   inputs:
+            #     terraformVersion: '1.5.4'
+            # - task: TerraformTaskV4@4
+            #   displayName: 'init'
+            #   inputs:
+            #     inputs:
+            #     provider: 'azurerm'
+            #     command: 'init'
+            #     backendServiceArm: $(service_connection)
+            #     backendAzureRmResourceGroupName: $(resource_group)
+            #     backendAzureRmStorageAccountName: $(storage_account)
+            #     backendAzureRmContainerName: 'tfstate'
+            #     backendAzureRmKey: 'terraform.tfstate'
+            #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            # - task: TerraformTaskV4@4
+            #   displayName: 'output'
+            #   name: tfoutput
+            #   inputs:
+            #     provider: 'azurerm'
+            #     command: 'output'
+            #     environmentServiceNameAzureRM: $(service_connection)
+            #     workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            # - script: |
+            #     python -m pip install --upgrade pip
+            #     pip install copier
+            #   displayName: 'Install Python dependencies'
+            # - task: PythonScript@0
+            #   inputs:
+            #     scriptSource: 'filePath'
+            #     scriptPath: '$(System.DefaultWorkingDirectory)/pipeline-scripts/generate-flux.py'
+            #     arguments:  '$(tfoutput.jsonOutputVariablesPath)'
+            #     workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
             - script: |
                 git config --global user.email tmc-ado-automation@vmware.com & git config --global user.name "ado"
+                cat ~/.git-credentials
               workingDirectory: $(System.DefaultWorkingDirectory)
-            - script: |
-                git checkout -b $(Build.BuildNumber)
-                git add -A
-                git commit -m "generating flux repo structure $(Build.BuildNumber)"
-                git push --set-upstream origin $(Build.BuildNumber) 
+            # - script: |
+            #     set -o errexit
+            #     if git diff --exit-code; then
+            #       echo "Nothing to commit"
+            #       exit 0
+            #     fi
+            #     echo "committing new flux repo structure"
+            #     git checkout -b $(Build.BuildNumber)
+            #     git add -A
+            #     git commit -m "generating flux repo structure $(Build.BuildNumber)"
+            #     git push --set-upstream origin $(Build.BuildNumber) 
               displayName: push flux repo structure
               workingDirectory: $(System.DefaultWorkingDirectory)
-            - task: CreatePullRequest@1
-              inputs:
-                repoType: 'GitHub'
-                githubEndpoint: 'warroyo'
-                githubRepository: '$(Build.Repository.Name)'
-                sourceBranch: '$(Build.BuildNumber)'
-                targetBranch: 'main'
-                title: 'generate flux structure'
+            # - script: |
+            #     jx-scm pull-request create \
+            #       --kind "github" \
+            #       --server "github.com" \
+            #       --owner "warroyo" \
+            #       --name "tmc-bootstrap-automation" \
+            #       --head "testing" \
+            #       --title "add new stuff" \
+            #       --body "test" \
+            #       --base "main" \
+            #       --allow-update
