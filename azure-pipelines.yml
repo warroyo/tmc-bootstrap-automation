@@ -150,6 +150,7 @@ stages:
             - script: |
                 env
                 git config --global user.email tmc-ado-automation@vmware.com & git config --global user.name "ado"
+                ls -la
                 cat ~/.git-credentials
               workingDirectory: $(System.DefaultWorkingDirectory)
             # - script: |
