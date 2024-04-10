@@ -102,8 +102,8 @@ stages:
   #                 environmentServiceNameAzureRM: $(service_connection)
   #                 workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
   - stage: template
-    dependsOn: [apply]
-    condition: succeeded('apply')
+    # dependsOn: [apply]
+    # condition: succeeded('apply')
     jobs:
       - job: template_files
         steps:
