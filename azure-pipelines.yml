@@ -148,6 +148,7 @@ stages:
             #     arguments:  '$(tfoutput.jsonOutputVariablesPath)'
             #     workingDirectory: '$(System.DefaultWorkingDirectory)/pipeline-scripts'
             - script: |
+                env
                 git config --global user.email tmc-ado-automation@vmware.com & git config --global user.name "ado"
                 cat ~/.git-credentials
               workingDirectory: $(System.DefaultWorkingDirectory)
