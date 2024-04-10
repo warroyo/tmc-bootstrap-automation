@@ -162,8 +162,8 @@ stages:
             #     git add -A
             #     git commit -m "generating flux repo structure $(Build.BuildNumber)"
             #     git push --set-upstream origin $(Build.BuildNumber) 
-              displayName: push flux repo structure
-              workingDirectory: $(System.DefaultWorkingDirectory)
+              # displayName: push flux repo structure
+              # workingDirectory: $(System.DefaultWorkingDirectory)
             # - script: |
             #     jx-scm pull-request create \
             #       --kind "github" \
