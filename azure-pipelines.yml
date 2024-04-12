@@ -163,10 +163,7 @@ stages:
                 git push --set-upstream origin $(Build.BuildNumber) 
               displayName: push flux repo structure
               workingDirectory: $(System.DefaultWorkingDirectory)
-            - displayName: create PR
-              env:
-                GIT_TOKEN: $(github-pat)
-              script: |
+            - script: |
                 curl -LO https://github.com/jenkins-x-plugins/jx-scm/releases/download/v0.2.41/jx-scm-linux-amd64.tar.gz
                 tar -xvf jx-scm-linux-amd64.tar.gz
                 ./jx-scm pull-request create \
@@ -179,3 +176,6 @@ stages:
                   --body "add new flux repo structure" \
                   --base "main" \
                   --allow-update
+              displayName: create PR
+              env:
+                GIT_TOKEN: $(github-pat)
