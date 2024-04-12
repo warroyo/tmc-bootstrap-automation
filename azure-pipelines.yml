@@ -5,6 +5,7 @@ variables:
   value: tfstate01tmc
 - name: service_connection
   value: warroyo-se-azure
+- group: tmc-bootstrap-automation
 trigger:
   branches:
     include:
