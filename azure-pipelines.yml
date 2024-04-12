@@ -168,7 +168,7 @@ stages:
                 tar -xvf jx-scm-linux-amd64.tar.gz
                 ./jx-scm pull-request create \
                   --kind "github" \
-                  --server "github.com" \
+                  --server "https://github.com" \
                   --owner "warroyo" \
                   --name "tmc-bootstrap-automation" \
                   --head "$(Build.BuildNumber)" \
