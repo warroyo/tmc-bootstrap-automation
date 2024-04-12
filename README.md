@@ -108,9 +108,25 @@ az keyvault secret set --vault-name "terraform-secrets01" --name "tmc-endpoint" 
 az keyvault secret set --vault-name "terraform-secrets01" --name "tmc-api-key" --value "<tmc-api-key>"
 ```
 
+### Github PAT
+
+This can be used for private repos as well as for creating the PR at the end of the pipeline.
+
+```bash
+az keyvault secret set --vault-name "terraform-secrets01" --name "github-pat" --value "<github token>"
+```
+
 ## Create a base pipeline for the git repo
 
-In the ADO project create a new pipeline and select your repo and the azure-pipelines.yaml, it should automatically pick this up.
+In the ADO project create a new pipeline and select your repo. You will need to authorize your azure account to connect to github repos. Once conected you should see the repos and you can now select this repo and the azure-pipelines.yaml, it should automatically pick this up.
+
+### Add a github PAT
+
+This is needed to that the github CLI can be used from the azure pipelines. Currently there is not a way to use the existing service connection for this unfortunately.
+
+1. create a variable group
+2. select to use secrets from AKV
+3. choos the terraform akv and the  github pat created in the previous step
 
 ## Templating new clusters and cluster groups
 
