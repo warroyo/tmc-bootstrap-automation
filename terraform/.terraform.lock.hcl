@@ -6,6 +6,7 @@ provider "registry.terraform.io/hashicorp/azurerm" {
   constraints = "3.68.0"
   hashes = [
     "h1:M+Y6f+esswWqOSn6f0h5sENPxeszwGs+xnmkbdFlf4s=",
+    "h1:lsWVSkOkw2zwOYJxkOabZv2YrhCPDJLcOmP2GErhnEE=",
     "zh:08ef378947ff68642c1616282b14804810ef7844c236ec1f8d0bb5d72f3a666a",
     "zh:0d24bf6931e08891293f563680895be5bd676b5ad85f04c2ac536531359b9495",
     "zh:108ea18a8aafb225064c83e1332eccfc7fad007a926deca9bb31f3a6b46c40af",
@@ -24,6 +25,7 @@ provider "registry.terraform.io/hashicorp/azurerm" {
 provider "registry.terraform.io/hashicorp/random" {
   version = "3.6.0"
   hashes = [
+    "h1:R5Ucn26riKIEijcsiOMBR3uOAjuOMfI1x7XvH4P6B1w=",
     "h1:p6WG1IPHnqx1fnJVKNjv733FBaArIugqy58HRZnpPCk=",
     "zh:03360ed3ecd31e8c5dac9c95fe0858be50f3e9a0d0c654b5e504109c2159287d",
     "zh:1c67ac51254ba2a2bb53a25e8ae7e4d076103483f55f39b426ec55e47d1fe211",
@@ -45,6 +47,7 @@ provider "registry.terraform.io/vmware/tanzu-mission-control" {
   constraints = "1.4.4"
   hashes = [
     "h1:8UQrZljSxJ4u7ExBPnmA5kJcLyc9KqKoUHkw6Imh3A4=",
+    "h1:VEUA16WSWa/J8IAbRk17Qb/2LCF0iMD9QgQjEfytXOA=",
     "zh:3eff06742f9e29b65f717f73e3908a8d204526a49b727e4c39085c20cdc1dcc2",
     "zh:5514b4c88f2a222e3498f43bfa564a2968682e8f126c671db125362470125a50",
     "zh:693dac726d694f4038bb688afa96042db190c21f1ff062391ef680b875a21e95",
