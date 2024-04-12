@@ -159,7 +159,7 @@ stages:
                 fi
                 echo "committing new flux repo structure"
                 git checkout -b $(Build.BuildNumber)
-                git add -A
+                git add ./flux
                 git commit -m "generating flux repo structure $(Build.BuildNumber)"
                 git push --set-upstream origin $(Build.BuildNumber) 
               displayName: push flux repo structure
