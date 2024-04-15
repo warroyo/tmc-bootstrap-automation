@@ -1,0 +1,15 @@
+- task: TerraformInstaller@0
+  displayName: "Install Terraform"
+  inputs:
+    terraformVersion: '1.5.4'
+- task: TerraformTaskV4@4
+  displayName: 'init'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: $(service_connection) # service connection created during setup
+    backendAzureRmResourceGroupName: $(resource_group)
+    backendAzureRmStorageAccountName: $(storage_account)
+    backendAzureRmContainerName: 'tfstate'
+    backendAzureRmKey: 'terraform.tfstate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'

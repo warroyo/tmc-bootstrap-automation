@@ -21,21 +21,8 @@ stages:
     - job: validate
       continueOnError: false
       steps:
-      - task: TerraformInstaller@0
-        displayName: "Install Terraform"
-        inputs:
-          terraformVersion: '1.5.4'
-      - task: TerraformTaskV4@4
-        displayName: 'init'
-        inputs:
-          provider: 'azurerm'
-          command: 'init'
-          backendServiceArm: $(service_connection) # service connection created during setup
-          backendAzureRmResourceGroupName: $(resource_group)
-          backendAzureRmStorageAccountName: $(storage_account)
-          backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform.tfstate'
-          workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+      - checkout: self
+      - template: ../pipeline-templates/tf.yml
       - task: TerraformTaskV4@4
         displayName: 'validate'
         inputs:
@@ -49,22 +36,7 @@ stages:
       - job: terraform_plan
         steps:
               - checkout: self
-              - task: TerraformInstaller@0
-                displayName: 'install'
-                inputs:
-                  terraformVersion: '1.5.4'
-              - task: TerraformTaskV4@4
-                displayName: 'init'
-                inputs:
-                  inputs:
-                  provider: 'azurerm'
-                  command: 'init'
-                  backendServiceArm: $(service_connection)
-                  backendAzureRmResourceGroupName: $(resource_group)
-                  backendAzureRmStorageAccountName: $(storage_account)
-                  backendAzureRmContainerName: 'tfstate'
-                  backendAzureRmKey: 'terraform.tfstate'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+              - template: ../pipeline-templates/tf.yml
               - task: TerraformTaskV4@4
                 displayName: 'plan'
                 inputs:
@@ -80,22 +52,7 @@ stages:
       - job: terraform_apply
         steps:
               - checkout: self
-              - task: TerraformInstaller@0
-                displayName: 'install'
-                inputs:
-                  terraformVersion: '1.5.4'
-              - task: TerraformTaskV4@4
-                displayName: 'init'
-                inputs:
-                  inputs:
-                  provider: 'azurerm'
-                  command: 'init'
-                  backendServiceArm: $(service_connection)
-                  backendAzureRmResourceGroupName: $(resource_group)
-                  backendAzureRmStorageAccountName: $(storage_account)
-                  backendAzureRmContainerName: 'tfstate'
-                  backendAzureRmKey: 'terraform.tfstate'
-                  workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+              - template: ../pipeline-templates/tf.yml
               - task: TerraformTaskV4@4
                 displayName: 'apply'
                 inputs:
@@ -115,22 +72,7 @@ stages:
             - task: UsePythonVersion@0
               inputs:
                 versionSpec: '3.x' 
-            - task: TerraformInstaller@0
-              displayName: 'install'
-              inputs:
-                terraformVersion: '1.5.4'
-            - task: TerraformTaskV4@4
-              displayName: 'init'
-              inputs:
-                inputs:
-                provider: 'azurerm'
-                command: 'init'
-                backendServiceArm: $(service_connection)
-                backendAzureRmResourceGroupName: $(resource_group)
-                backendAzureRmStorageAccountName: $(storage_account)
-                backendAzureRmContainerName: 'tfstate'
-                backendAzureRmKey: 'terraform.tfstate'
-                workingDirectory: '$(System.DefaultWorkingDirectory)/terraform/'
+            - template: ../pipeline-templates/tf.yml
             - task: TerraformTaskV4@4
               displayName: 'output'
               name: tfoutput
