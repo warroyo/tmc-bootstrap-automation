@@ -14,6 +14,7 @@ trigger:
     include:
       - "cluster_yaml/*"
       - "terraform/*"
+pr: none
 stages:
   - stage: validate
     jobs:
