@@ -156,13 +156,15 @@ stages:
                 set -o errexit
                 if git diff --exit-code flux/; then
                   echo "Nothing to commit"
+                  echo "##vso[task.setvariable variable=doPR]No"
                   exit 0
                 fi
                 echo "committing new flux repo structure"
                 git checkout -b $(Build.BuildNumber)
                 git add ./flux
                 git commit -m "generating flux repo structure $(Build.BuildNumber)"
-                git push --set-upstream origin $(Build.BuildNumber) 
+                git push --set-upstream origin $(Build.BuildNumber)
+                echo "##vso[task.setvariable variable=doPR]Yes" 
               displayName: push flux repo structure
               workingDirectory: $(System.DefaultWorkingDirectory)
             - script: |
@@ -179,5 +181,6 @@ stages:
                   --base "main" \
                   --allow-update
               displayName: create PR
+              condition: and(succeeded(), eq(variables['doPr'], 'Yes'))
               env:
                 GIT_TOKEN: $(github-pat)
