@@ -154,7 +154,7 @@ stages:
               workingDirectory: $(System.DefaultWorkingDirectory)
             - script: |
                 set -o errexit
-                if git diff --exit-code; then
+                if git diff --exit-code flux/; then
                   echo "Nothing to commit"
                   exit 0
                 fi
