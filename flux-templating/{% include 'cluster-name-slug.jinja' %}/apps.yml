@@ -5,8 +5,6 @@ metadata:
   name: apps
   namespace: tanzu-continuousdelivery-resources
 spec:
-  dependsOn:
-  - name: infrastructure
   interval: 10m0s
   path: flux/apps/clusters/${cluster_name}
   prune: true
