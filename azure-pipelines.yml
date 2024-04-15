@@ -22,7 +22,7 @@ stages:
       continueOnError: false
       steps:
       - checkout: self
-      - template: ../pipeline-templates/tf.yml
+      - template: ./pipeline-templates/tf.yml
       - task: TerraformTaskV4@4
         displayName: 'validate'
         inputs:
@@ -36,7 +36,7 @@ stages:
       - job: terraform_plan
         steps:
               - checkout: self
-              - template: ../pipeline-templates/tf.yml
+              - template: ./pipeline-templates/tf.yml
               - task: TerraformTaskV4@4
                 displayName: 'plan'
                 inputs:
@@ -52,7 +52,7 @@ stages:
       - job: terraform_apply
         steps:
               - checkout: self
-              - template: ../pipeline-templates/tf.yml
+              - template: ./pipeline-templates/tf.yml
               - task: TerraformTaskV4@4
                 displayName: 'apply'
                 inputs:
@@ -72,7 +72,7 @@ stages:
             - task: UsePythonVersion@0
               inputs:
                 versionSpec: '3.x' 
-            - template: ../pipeline-templates/tf.yml
+            - template: ./pipeline-templates/tf.yml
             - task: TerraformTaskV4@4
               displayName: 'output'
               name: tfoutput
