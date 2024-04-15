@@ -15,6 +15,8 @@ cluster_group:
   default: ""
   when: "{{ new_group }}"
 
+_skip_if_exists:
+  - "*"
 _exclude:
   - .vscode
   - .gitignore
