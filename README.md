@@ -127,7 +127,7 @@ This is needed to that the github CLI can be used from the azure pipelines. Curr
 
 1. create a variable group
 2. select to use secrets from AKV
-3. choos the terraform akv and the  github pat created in the previous step
+3. choose the terraform akv and the  github pat created in the previous step
 
 
 ## Usage
