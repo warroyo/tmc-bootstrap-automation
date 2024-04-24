@@ -32,6 +32,7 @@ module "cg_bootstrap" {
   source = "../modules/cluster_bootstrap/"
   cluster_group = tanzu-mission-control_cluster_group.create_cluster_group[each.key].name
   infra_gitops_repo = "https://github.com/warroyo/tmc-bootstrap-automation"
+  depends_on = [ tanzu-mission-control_cluster_group.create_cluster_group ]
 }
 
 output "cluster_groups" {
