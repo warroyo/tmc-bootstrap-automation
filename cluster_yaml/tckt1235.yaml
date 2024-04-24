@@ -1,7 +1,0 @@
-product_team: iris-purple
-k8s_version: v1.26.5+vmware.2-fips.1-tkg.1
-mgmt_cluster: costco-poc
-provisioner: lab
-ad_groups:
-- team1.sso
-- team2.sso
