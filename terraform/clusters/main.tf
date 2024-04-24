@@ -9,7 +9,7 @@ locals {
 module "clusters" {
   for_each = local.filtered_data
   source = "../modules/tmc_tkgs_cluster"
-  management_cluster_name = each.value.mgmt_cluster
+  management_cluster_name = var.management_cluster_name
   cluster_name = "tkg-${each.value.product_team}-cluster"
   provisioner_name = each.value.provisioner
   storage_class = "vc01cl01-t0compute"
@@ -28,7 +28,7 @@ resource "tanzu-mission-control_namespace" "create_namespace" {
   name                    = each.value.product_team 
   cluster_name            = module.clusters[each.key].cluster_name
   provisioner_name        = each.value.provisioner   
-  management_cluster_name = each.value.mgmt_cluster 
+  management_cluster_name = var.management_cluster_name 
 
   spec {
     workspace_name = each.value.product_team 
